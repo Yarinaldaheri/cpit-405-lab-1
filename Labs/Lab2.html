@@ -2,47 +2,59 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CPIT-405 lab 2</title>
 </head>
 
 <body>
+
     <h1>Lab 2: HTML</h1>
+
     <a href="https://cpit405.gitlab.io">CPIT-405 Website</a>
-    <p>HTML is used to create and structure web pages</p>
+
+    <p>HTML is used to create and structure web pages.</p>
+
     <hr>
+
     <p>In this lab, I am practicing using different HTML elements.</p>
+
+    <a href="https://www.kau.edu.sa/ar/page/historical-overview-">
+        <img src="https://www.kau.edu.sa/web/static?path=uploads%2F2025%2FSep%2Fmediacenter%2Fk%2FCyfYHeBPO2975Ir3.jpg"
+            alt="King Abdulaziz University"
+            width="200">
+    </a>
+
 
     <p>I am learning the <strong>basic structure</strong> of a web page.</p>
 
     <p>I am using <em>HTML markup tags</em> for building web pages.</p>
 
-    <p>I am creating a webpage for scheduling <sup>meetings</sup>.</p>
+    <p>The result of 2<sup>3</sup> is 8.</p>
 
-    <p>I am learning to publish and host a <sub>static web page</sub>.</p>
+    <p>HTML can display chemical formulas such as H<sub>2</sub>O.</p>
 
     <p>In this lab, I am practicing <span>HTML web development</span>.</p>
+
 
     <h1>Heading elements</h1>
 
     <h2>Summary</h2>
-
     <p>This lab introduces the basic structure of HTML web pages.</p>
 
     <h2>Examples</h2>
 
     <h3>Example 1</h3>
-
     <p>HTML markup tags are used to build web pages.</p>
 
     <h3>Example 2</h3>
-
     <p>HTML elements can be used to create a webpage for scheduling meetings.</p>
 
     <h2>See also</h2>
+    <p>This lab also covers publishing and hosting a static web page.</p>
 
-    <p>This lab also covers publishing and hosting a static web page.</p> 
+
+    <h2>Ordered List</h2>
 
     <ol>
         <li>Understand HTML structure</li>
@@ -50,11 +62,17 @@
         <li>Build web pages</li>
     </ol>
 
+
+    <h2>Unordered List</h2>
+
     <ul>
         <li>HTML structure</li>
         <li>HTML elements</li>
         <li>Web development</li>
     </ul>
+
+
+    <h2>Definition List</h2>
 
     <dl>
         <dt>HTML</dt>
@@ -64,42 +82,55 @@
         <dd>A web page that can be published and hosted.</dd>
     </dl>
 
-    <table>
-    <tr>
-        <th>Basics</th>
-        <th>Front-end Frameworks</th>
-        <th>Server-side frameworks</th>
-    </tr>
-    <tr>
-        <td>HTML</td>
-        <td>React</td>
-        <td>Spring</td>
-    </tr>
-    <tr>
-        <td>CSS</td>
-        <td>Angular</td>
-        <td>Django</td>
-    </tr>
-     <tr>
-        <td>JS</td>
-        <td>Vue</td>
-        <td>Laravel</td>
-    </tr>
-</table>
 
-<form>
-    <label>Login:</label>
-    <input type="text">
+    <h2>Web Development Technologies</h2>
 
-    <br>
+    <table border="1">
+        <tr>
+            <th>Basics</th>
+            <th>Front-end Frameworks</th>
+            <th>Server-side frameworks</th>
+        </tr>
 
-    <label>Password:</label>
-    <input type="password">
+        <tr>
+            <td>HTML</td>
+            <td>React</td>
+            <td>Spring</td>
+        </tr>
 
-    <br>
+        <tr>
+            <td>CSS</td>
+            <td>Angular</td>
+            <td>Django</td>
+        </tr>
 
-    <input type="submit" value="Submit">
-</form>
+        <tr>
+            <td>JS</td>
+            <td>Vue</td>
+            <td>Laravel</td>
+        </tr>
+    </table>
+
+
+    <h2>Login Form</h2>
+
+    <form action="" method="post">
+        <label for="login">Login:</label>
+        <br>
+        <input type="text" name="login" id="login" required>
+
+        <br>
+
+        <label for="password">Password:</label>
+        <br>
+        <input type="password" name="password" id="password" required>
+
+        <br>
+        <br>
+
+        <input type="submit" value="Submit">
+    </form>
 
 </body>
+
 </html>
