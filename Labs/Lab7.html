@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPIT405-Lab 7</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            background-color: #f4f6fb;
+            color: #222;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2d3a8c, #4757c4);
+            padding: 20px 15px 25px;
+            text-align: center;
+            color: white;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 10px;
+            opacity: 0.85;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        header h1 {
+            margin: 0 0 5px;
+        }
+
+        header p {
+            margin: 0 0 18px;
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        header input[type="text"] {
+            padding: 10px;
+            width: 320px;
+            max-width: 100%;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .buttons {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        header button {
+            padding: 10px 14px;
+            border: none;
+            border-radius: 6px;
+            background-color: white;
+            color: #2d3a8c;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        header button:hover {
+            background-color: #dfe4ff;
+        }
+
+        /* ===== Status message ===== */
+        #status {
+            text-align: center;
+            font-weight: bold;
+            margin: 20px 10px 0;
+        }
+
+        #status.error {
+            color: #c0392b;
+        }
+        #searchResults {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 18px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 15px 30px;
+        }
+
+        .photo-card {
+            margin: 0;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .photo-card.hovered {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            cursor: pointer;
+        }
+
+        .photo-card figcaption {
+            padding: 10px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .photo-card a {
+            color: #2d3a8c;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a class="back-link" href="Labs.html">&larr; Back to Labs</a>
+        <h1>Lab 7: Unsplash Image Search</h1>
+        <p>XMLHttpRequest, Fetch with Promises, and Fetch with Async/Await</p>
+
+        <input type="text" placeholder="Search for photos, e.g. cats">
+
+        <div class="buttons">
+            <button id="xhrSearch">Search using XHR</button>
+            <button id="fetchSearch">Search using fetch</button>
+            <button id="fetchAsyncAwaitSearch">Search using fetch with await/async</button>
+        </div>
+    </header>
+
+    <main>
+        <p id="status"></p>
+        <div id="searchResults"></div>
+    </main>
+
+    <script>
+        const accessKey = "_A7j_Kwg7xhzkC06pjt3yB1Bf6W8GZo5slXds00PCDE";
+        const url = "https://api.unsplash.com/search/photos";
+        let btnXHR = document.getElementById("xhrSearch");
+        let btnFetch = document.getElementById("fetchSearch");
+        let btnFetchAsyncAwait = document.getElementById("fetchAsyncAwaitSearch");
+        let searchText = document.querySelector('header input[type="text"]');
+        let searchResults = document.getElementById("searchResults");
+        let statusText = document.getElementById("status");
+        function setStatus(message, isError) {
+            statusText.textContent = message;
+            statusText.className = isError ? "error" : "";
+        }
+        function prepareSearch(keyword) {
+            searchResults.innerHTML = "";
+            if (!keyword) {
+                setStatus("Please type something to search for.", true);
+                return false;
+            }
+            setStatus("Loading...");
+            return true;
+        }
+        btnXHR.addEventListener("click", function () {
+            fetchUnsplash_UsingXHR(searchText.value.trim());
+        });
+
+        btnFetch.addEventListener("click", function () {
+            fetchUnsplash_UsingFetch(searchText.value.trim());
+        });
+
+        btnFetchAsyncAwait.addEventListener("click", function () {
+            fetchUnsplash_UsingFetchAsyncAwait(searchText.value.trim())
+                .catch((e) => {
+                    console.error(e);
+                    setStatus("Error: " + e.message, true);
+                });
+        });
+        searchText.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                btnFetchAsyncAwait.click();
+            } else if (event.key === "Escape") {
+                searchText.value = "";
+                searchResults.innerHTML = "";
+                setStatus("");
+            }
+        });
+        function fetchUnsplash_UsingXHR(keyword) {
+            if (!prepareSearch(keyword)) return;
+
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState != 4) return;
+                if (xhr.status === 200) {
+                    let data = JSON.parse(xhr.responseText);
+                    processResponse(data, "XHR");
+                } else {
+                    setStatus("Error: " + xhr.status, true);
+                }
+            };
+            xhr.open("GET", url + "?query=" + encodeURIComponent(keyword), true);
+            xhr.setRequestHeader("Authorization", "Client-ID " + accessKey);
+            xhr.send();
+        }
+        function fetchUnsplash_UsingFetch(keyword) {
+            if (!prepareSearch(keyword)) return;
+
+            fetch(url + "?query=" + encodeURIComponent(keyword), {
+                method: "GET",
+                headers: { Authorization: "Client-ID " + accessKey }
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(response.status);
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    processResponse(data, "fetch");
+                })
+                .catch((e) => {
+                    console.error(e);
+                    setStatus("Error: " + e.message, true);
+                });
+        }
+        async function fetchUnsplash_UsingFetchAsyncAwait(keyword) {
+            if (!prepareSearch(keyword)) return;
+
+            let response = await fetch(url + "?query=" + encodeURIComponent(keyword), {
+                method: "GET",
+                headers: { Authorization: "Client-ID " + accessKey }
+            });
+            if (!response.ok) {
+                throw new Error(response.status);
+            }
+            let data = await response.json();
+            processResponse(data, "fetch with async/await");
+        }
+        function processResponse(data, method) {
+            if (data.results.length === 0) {
+                setStatus("No photos found. Try another word.", true);
+                return;
+            }
+
+            setStatus(data.results.length + " photos found using " + method);
+
+            for (let i = 0; i < data.results.length; i++) {
+                let photo = data.results[i];
+
+                let figure = document.createElement("figure");
+                figure.className = "photo-card";
+
+                let imgElem = document.createElement("img");
+                imgElem.src = photo.urls.small;
+                imgElem.alt = photo.alt_description || "Unsplash photo";
+
+                // credit the photographer (required by Unsplash)
+                let caption = document.createElement("figcaption");
+                caption.textContent = "Photo by ";
+                let authorLink = document.createElement("a");
+                authorLink.href = photo.user.links.html;
+                authorLink.target = "_blank";
+                authorLink.textContent = photo.user.name;
+                caption.appendChild(authorLink);
+
+                // Mouse events on the photo
+                figure.addEventListener("mouseover", function () {
+                    figure.classList.add("hovered");
+                });
+                figure.addEventListener("mouseout", function () {
+                    figure.classList.remove("hovered");
+                });
+                imgElem.addEventListener("click", function () {
+                    window.open(photo.links.html, "_blank");
+                });
+
+                figure.appendChild(imgElem);
+                figure.appendChild(caption);
+                searchResults.appendChild(figure);
+            }
+        }
+    </script>
+</body>
+
+</html>
