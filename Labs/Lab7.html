@@ -78,8 +78,6 @@
         header button:hover {
             background-color: #dfe4ff;
         }
-
-        /* ===== Status message ===== */
         #status {
             text-align: center;
             font-weight: bold;
@@ -254,20 +252,14 @@
                 setStatus("No photos found. Try another word.", true);
                 return;
             }
-
             setStatus(data.results.length + " photos found using " + method);
-
             for (let i = 0; i < data.results.length; i++) {
                 let photo = data.results[i];
-
                 let figure = document.createElement("figure");
                 figure.className = "photo-card";
-
                 let imgElem = document.createElement("img");
                 imgElem.src = photo.urls.small;
                 imgElem.alt = photo.alt_description || "Unsplash photo";
-
-                // credit the photographer (required by Unsplash)
                 let caption = document.createElement("figcaption");
                 caption.textContent = "Photo by ";
                 let authorLink = document.createElement("a");
@@ -275,8 +267,6 @@
                 authorLink.target = "_blank";
                 authorLink.textContent = photo.user.name;
                 caption.appendChild(authorLink);
-
-                // Mouse events on the photo
                 figure.addEventListener("mouseover", function () {
                     figure.classList.add("hovered");
                 });
