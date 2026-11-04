@@ -1,0 +1,96 @@
+body {
+    text-align: center;
+    margin: 0 20px;
+}
+
+h1 {
+    font-size: 48px;
+    margin: 15px 0 22px;
+    color: #333;
+}
+
+h2 {
+    font-size: 36px;
+    margin: 0 0 22px;
+    color: #333;
+}
+
+h3 {
+    font-size: 28px;
+    color: #000;
+    margin: 30px 0 15px;
+}
+
+.votes button {
+    font-size: 54px;
+    padding: 3px 24px;
+    margin: 0 8px;
+    background-color: #e9e9ed;
+    border: 1px solid #8f8f9d;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.votes button:hover:not(:disabled) {
+    transform: scale(1.08);
+}
+
+.votes button:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+textarea {
+    width: 100%;
+    max-width: 670px;
+    height: 156px;
+    padding: 12px;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.actions button {
+    margin: 15px 8px;
+    padding: 12px 26px;
+    font-size: 20px;
+    color: white;
+    background-color: #525252;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#comments-list {
+    list-style: none;
+    padding: 0;
+}
+
+#comments-list li {
+    max-width: 646px;
+    margin: 8px auto;
+    padding: 12px;
+    font-size: 20px;
+    background-color: #f2f2f2;
+    border-radius: 8px;
+}
+
+#message {
+    font-size: 20px;
+    color: #2e7d32;
+    min-height: 24px;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+@media (max-width: 600px) {
+    h1 { font-size: 40px; }
+    h2 { font-size: 30px; }
+    h3 { font-size: 26px; }
+    .votes button { font-size: 40px; padding: 0 20px; }
+    textarea, .actions button, #comments-list li { font-size: 18px; }
+}
