@@ -1,0 +1,179 @@
+/* Yarin Aldaheri - CPIT-405 Labs Page */
+
+/* Reset default browser spacing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Page background */
+body {
+    max-width: 1180px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 54px 24px 30px;
+    font-family: Arial, sans-serif;
+    color: #f5f0fb;
+
+    background:
+        radial-gradient(ellipse at 50% 0%, #351943 0%, transparent 55%),
+        linear-gradient(180deg, #21132d, #100a19 85%);
+}
+
+/* Page heading */
+.page-header {
+    margin-bottom: 38px;
+    text-align: center;
+}
+
+/* Small text above the title */
+.eyebrow {
+    margin-bottom: 12px;
+    color: #d7b5f5;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* Main title */
+h1 {
+    color: #ffffff;
+    font-size: 56px;
+}
+
+/* Gradient color for Labs */
+h1 span {
+    display: inline-block;
+    background: linear-gradient(100deg, #b65cff, #ed79d0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Line under the title */
+h1::after {
+    content: "";
+    display: block;
+    width: 82px;
+    height: 4px;
+    margin: 13px auto 0;
+    border-radius: 4px;
+    background-color: #e58bc9;
+}
+
+/* Page description */
+.page-description {
+    margin-top: 16px;
+    color: #c8bbd6;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Arrange labs in a grid */
+.labs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+/* Lab cards */
+.labs-grid a {
+    display: block;
+    min-height: 178px;
+    padding: 112px 16px 20px;
+    border: 1px solid #49365d;
+    border-radius: 15px;
+    background-color: #291e3b;
+    background-image: url("folder.png");
+    background-repeat: no-repeat;
+    background-position: center 19px;
+    background-size: 76px 76px;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(8, 4, 15, 0.16);
+    transition: transform 0.25s, border-color 0.25s, background-color 0.25s;
+}
+
+/* Text under each lab */
+.labs-grid a::after {
+    content: "Open lab →";
+    display: block;
+    margin-top: 9px;
+    color: #e8a6d4;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+/* Card hover effect */
+.labs-grid a:hover {
+    transform: translateY(-5px);
+    border-color: #d98ac2;
+    background-color: #332448;
+}
+
+/* Keyboard focus */
+.labs-grid a:focus-visible,
+footer a:focus-visible {
+    outline: 3px solid #f1b8df;
+    outline-offset: 4px;
+}
+
+/* Footer */
+footer {
+    margin-top: 42px;
+    padding-top: 20px;
+    border-top: 1px solid #49365d;
+    color: #aa9ab9;
+    font-size: 13px;
+    text-align: center;
+}
+
+/* Back to home link */
+footer a {
+    display: inline-block;
+    margin-bottom: 15px;
+    color: #e8b5dc;
+    text-decoration: none;
+}
+
+/* Footer hover */
+footer a:hover {
+    color: #ffffff;
+}
+
+/* Tablet screens */
+@media (max-width: 900px) {
+
+    .labs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile screens */
+@media (max-width: 520px) {
+
+    body {
+        padding: 38px 18px 24px;
+    }
+
+    h1 {
+        font-size: 42px;
+    }
+
+    .page-description {
+        font-size: 14px;
+    }
+
+    .labs-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .labs-grid a {
+        min-height: 160px;
+    }
+}
